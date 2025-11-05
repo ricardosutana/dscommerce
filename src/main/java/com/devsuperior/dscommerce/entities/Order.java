@@ -2,6 +2,7 @@ package com.devsuperior.dscommerce.entities;
 
 import java.time.Instant;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -22,9 +23,10 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy=jakarta.persistence.GenerationType.IDENTITY)
-
     private Long id;
-    private Instant moment;
+
+    @Column(columnDefinition="TIMESTAMP WITHOUT TIME ZONE")
+    private Instant moment;    
     private OrderStatus status;
 
     @ManyToOne //Relação muitos para um com User
