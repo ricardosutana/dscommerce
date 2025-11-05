@@ -1,18 +1,26 @@
 package com.devsuperior.dscommerce.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
+//Mapeamento objeto relacional entre a classe User 
+//(java) e a tabela tb_user no banco de dados H2
+@Entity 
+@Table(name = "tb_user") 
 
-@Entity
-@Table(name = "tb_user")
-
+//- User se relaciona com Order (um para muitos)
 public class User {
-    //mapeamento objeto relacional entre a classe User (java) e a tabela tb_user no banco de dados H2
+    /*   
+    - Mapeamento objeto relacional entre a classe User 
+    (java) e a tabela tb_user no banco de dados H2
+    */
     @Id
     @GeneratedValue(strategy=jakarta.persistence.GenerationType.IDENTITY)
 
@@ -22,9 +30,15 @@ public class User {
     private String phone;
     private LocalDate birthDate;
     private String password;
+
+    @OneToMany(mappedBy = "client")// nome do atributo na classe Order que referencia o User
+    
+    private List<Order> orders = new ArrayList<>(); //um usuario pode ter muitos pedidos
+
     /* a parte de ROLES vai serm implementada mais pra frente */
     public User() {
     }
+
     public User(Long id, String name, String email, String phone, LocalDate birthDate, String password) {
         this.id = id;
         this.name = name;
@@ -74,5 +88,11 @@ public class User {
         return "User [id=" + id + ", name=" + name + ", email=" + email + ", phone=" + phone + ", birthDate="
                 + birthDate + ", password=" + password + "]";
     }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
     
+    
+
 }
